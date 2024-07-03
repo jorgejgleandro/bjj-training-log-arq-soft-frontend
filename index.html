@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="styles.css">
+
+    <title>BJJ Training Log</title>
+</head>
+
+<body>
+    <!-- Cabeçalho de informações do sistema -->
+    <header>
+        <div class="title">
+            <h2>Técnicas Aprendidas de Brazilian Jiu-Jitsu</h2>
+        </div>
+        <div class="banner"></div>
+    </header>
+
+   <div id="loader"></div>
+
+    <!-- Abas para cadastro de entidades Tecnica e Aluno -->
+    <div class="tab">
+        <button class="tablinks active" id="newTecnica_tab">Adicione Nova
+            Técnica</button>
+        <button class="tablinks" id="newAluno_tab">Adicione Novo Aluno</button>
+    </div>
+
+    <div class="tabcontent" id="newTecnica_content">
+        <!-- Opções para adicionar uma nova Tecnica -->
+        <section class="newItem">
+            <input type="text" id="newTecnica" placeholder="Adicionar nova tecnica:">
+            <input type="text" id="newDescricao" placeholder="* Descricao gerada por IA GPT-4o *">
+            <input type="radio" id="iniciante" name="newNivel" value="Iniciante">
+            <label for="iniciante">Iniciante</label>
+            <input type="radio" id="intermediario" name="newNivel" value="Intermediário">
+            <label for="intermediario">Intermediário</label>
+            <input type="radio" id="avancado" name="newNivel" value="Avançado">
+            <label for="avancado">Avançado</label>
+            <input type="text" id="newVideo" placeholder="Video:">
+            <span onclick="newItem('tecnica', 'myTableTecnica', 'newTecnica', 'newDescricao', 'newNivel', 'newVideo')"
+                class="addBtn">Adicionar</span>
+        </section>
+
+        <!-- Tabela com tecnicas registradas -->
+        <p>Lista de técnicas adicionadas.</p>
+        <section class="items">
+            <table id="myTableTecnica">
+                <tr>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Nível</th>
+                    <th>Vídeo</th>
+                    <th><img src="https://cdn-icons-png.flaticon.com/512/126/126468.png" width="15px" height="15px">
+                    </th>
+                </tr>
+            </table>
+        </section>
+
+    </div>
+
+    <div class="tabcontent" id="newAluno_content">
+         <!-- Opções para adicionar um novo Aluno -->
+        <section class="newItem">
+            <input type="text" id="newAluno" placeholder="Adicionar nome do aluno:">
+            <input type="text" id="newDataNascimento" placeholder="Data de Nascimento:">
+            <input type="text" id="newDataInicio" placeholder="Data de Inicio:">
+            <label for="newGraduacao">Graduação:</label>
+            <select name="faixas" id="newGraduacao">
+                <option value="Branca">Branca</option>
+                <option value="Azul">Azul</option>
+                <option value="Roxa">Roxa</option>
+                <option value="Marrom">Marrom</option>
+                <option value="Preta">Preta</option>
+            </select>
+            <span
+                onclick="newItem('aluno', 'myTableAluno', 'newAluno', 'newDataNascimento', 'newDataInicio', 'newGraduacao')"
+                class="addBtn">Adicionar</span>
+        </section>
+
+        <!-- Tabela com alunos cadastrados -->
+        <p>Lista de Alunos cadastrados.</p>
+        <section class="items">
+            <table id="myTableAluno">
+                <tr>
+                    <th>Nome</th>
+                    <th>Data de Nascimento</th>
+                    <th>Data de Início</th>
+                    <th>Graduação</th>
+                    <th><img src="https://cdn-icons-png.flaticon.com/512/126/126468.png" width="15px" height="15px">
+                    </th>
+                </tr>
+            </table>
+        </section>
+
+    </div>
+
+    <script src="./scripts.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,233 @@
+body,
+ul,
+li {
+    font-family: tahoma;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(163, 186, 200);
+}
+
+header {
+    background-color: rgb(163, 186, 200);
+    text-align: center;
+    position: relative;
+    width: 100%;
+}
+
+.title {
+    color: white;
+    width: 100%;
+    background-color: rgb(24, 24, 122);
+    display: inline-block;
+    padding: 2px 0px;
+    position: sticky;
+    top: 0px;
+}
+
+.banner {
+    height: 200px;
+    overflow: hidden;
+    background-image: url('./img/positions.jpg');
+    background-size: 200px 200px;
+}
+
+
+.tab {
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: rgb(24, 24, 122);
+}
+
+.tab button {
+    background-color: inherit;
+    color: white;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 25px;
+}
+
+.tab button:hover {
+    background-color: #ddd;
+}
+
+.tab button.active {
+    background-color: #ccc;
+    color: rgb(24, 24, 122);
+}
+
+.tab-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 0px 20px;
+}
+
+.tabcontent {
+    display: none;
+    padding: 1px 1px;
+    border: 1px solid #ccc;
+    border-top: none;
+    flex-basis: 48%;
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.8);
+}
+
+@media screen and (max-width: 600px) {
+    .tab button {
+        float: none;
+        width: 100%;
+    }
+
+    .tabcontent {
+        flex-direction: column;
+    }
+}
+
+
+.newItem {
+    background-color: rgb(163, 186, 200);
+    padding: 5px 0px;
+    color: rgb(24, 24, 122);
+    display: flex;
+    justify-content: center;
+}
+
+.newItem:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+#newTecnica,
+#newAluno {
+    margin: 0px;
+    border: 1px solid rgb(35, 32, 24);
+    width: 25%;
+    padding: 5px;
+    font-size: 16px;
+}
+
+#newDescricao,
+#newDataNascimento {
+    margin: 0;
+    border: 1px solid rgb(35, 32, 24);
+    width: 25%;
+    padding: 5px;
+    font-size: 16px;
+}
+
+input[name="newNivel"] {
+    color: rgb(24, 24, 122);
+}
+
+#newNivel,
+#newDataInicio {
+    margin: 0;
+    border: 1px solid rgb(35, 32, 24);
+    width: 30%;
+    padding: 10px;
+    font-size: 16px;
+}
+
+#newVideo,
+#newGraduacao {
+    margin: 0;
+    border: 1px solid rgb(35, 32, 24);
+    width: 20%;
+    padding: 10px;
+    font-size: 16px;
+}
+
+
+.addBtn {
+    padding: 9px 10px;
+    background-color: rgb(35, 32, 24);
+    color: white;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 2px;
+}
+
+.addBtn:hover {
+    background-color: #2ab53a;
+    color: white;
+}
+
+.items {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.close:hover {
+    color: #f44336;
+    font-weight: bolder;
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    cursor: pointer;
+    position: relative;
+    padding: 12px 8px 12px 10px;
+    font-size: 18px;
+    transition: 0.2s;
+    text-align: start;
+}
+
+table {
+    background-color: white;
+    width: 98%;
+}
+
+tr:nth-child(odd) {
+    background-color: #eee;
+}
+
+th:nth-child(1) {
+    width: 30%;
+}
+
+th:nth-child(2) {
+    width: 40%;
+}
+
+tr:hover {
+    background: rgb(200, 199, 199);
+}
+
+p {
+    font-size: 22px;
+    text-align: center;
+    color: rgb(24, 24, 122);
+}
+
+
+#loader {
+    position: absolute;
+    top: 50%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    border: 16px solid #f3f3f3;
+    border-top: 16px solid #3498db;
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    animation: spin 2s linear infinite;
+    display: none;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
