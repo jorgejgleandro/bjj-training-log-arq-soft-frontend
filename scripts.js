@@ -1,6 +1,8 @@
 const OpenAI_HOST=`https://api.openai.com/v1/chat/completions`
 const OpenAI_API_KEY=''
 
+const Youtube_API_KEY=''
+
 const loader = document.getElementById("loader");
 
 /*
@@ -20,7 +22,7 @@ const getPrompt = (termDescribe) => {
 
 /*
   --------------------------------------------------------------------------------------
-  Função genérica para obter texto gerado por um LLM da OpenAI, dado um prompt, via requisição GET
+  Função genérica para obter texto gerado por um LLM via requisição GET, usando a API da OpenAI, dado um prompt
   --------------------------------------------------------------------------------------
 */
 
@@ -55,7 +57,26 @@ const generateText = async (prompt) => {
   }
 }
 
+/*
+  --------------------------------------------------------------------------------------
+  Função genérica para obter lista de videos via requisição GET, usando a API do Youtube, dado um termo
+  --------------------------------------------------------------------------------------
+*/
 
+async function fetchVideos(query, maxResults) {
+  const terms = `${query}+brazilian+jiu-jitsu+bjj`;
+  const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${terms}&key=${Youtube_API_KEY}&maxResults=${maxResults}`
+  const response = await fetch(url, {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    }
+  });
+  const data = await response.json();
+  console.log(`Video data: ${JSON.stringify(data)}`);
+  return data;
+}
 
 /*
   --------------------------------------------------------------------------------------
@@ -212,6 +233,15 @@ const getItemObj = async (route_name, ...args) => {
     inputDescription.value = data.choices[0]["message"]["content"]
 
     console.log(`inputDescription: ${inputDescription.value}`)
+
+    let inputVideo = document.getElementById(args[3]);
+    loader.style.display = "block";
+    const videosData = await fetchVideos(termDescribe, 1);
+    loader.style.display = "none";
+
+    const videoLink = `https://www.youtube.com/watch?v=` + videosData["items"][0]["id"]["videoId"];
+
+    inputVideo.value = videoLink;
 
     return ({
       'nome': document.getElementById(args[0]).value,
