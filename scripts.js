@@ -7,13 +7,14 @@ const loader = document.getElementById("loader");
 
 /*
   --------------------------------------------------------------------------------------
+  COMPONENTE EXTERNO - OPENAI
   Função genérica para obter um prompt para a descrição do termo dado
   --------------------------------------------------------------------------------------
 */
 
 const getPrompt = (termDescribe) => {
   
-  const prompt = `Descreva a posição do Brazilian Jiu-Jitsu denominada ${termDescribe}. A descrição deve ser subdividida em: Princípio, Posição Inicial (e.g Guarda, Raspagem, Montada), Execução (passos numerados), Variações, Dicas Importantes e Lembre-se`
+  const prompt = `Descreva a posição do Brazilian Jiu-Jitsu denominada ${termDescribe}. A descrição deve ser subdividida em: Princípio:, Posição Inicial: (e.g Guarda, Raspagem, Montada), Execução: (passos numerados), Variações:, Dicas Importantes: e Lembre-se:`
   
   console.log(`in getPrompt: ${prompt}`);
 
@@ -22,6 +23,7 @@ const getPrompt = (termDescribe) => {
 
 /*
   --------------------------------------------------------------------------------------
+  COMPONENTE EXTERNO - OPENAI
   Função genérica para obter texto gerado por um LLM via requisição GET, usando a API da OpenAI, dado um prompt
   --------------------------------------------------------------------------------------
 */
@@ -59,6 +61,7 @@ const generateText = async (prompt) => {
 
 /*
   --------------------------------------------------------------------------------------
+  COMPONENTE EXTERNO YOUTUBE
   Função genérica para obter lista de videos via requisição GET, usando a API do Youtube, dado um termo
   --------------------------------------------------------------------------------------
 */
@@ -317,14 +320,29 @@ const clearInputFields = (myTable) => {
 */
 const insertList = (item_obj, myTable, route_name) => {
   let item = Object.values(item_obj);
+  let key = Object.keys(item_obj);
 
   let table = document.getElementById(myTable);
   let row = table.insertRow();
 
   for (let i = 0; i < item.length; i++) {
     let cel = row.insertCell(i);
-    cel.textContent = item[i];
+
+    console.log(`INSERTLIST -- key is ${key[i]} value is ${item[i]}`)
+
+    if (key[i] === 'video'){
+      console.log(`creating link for ${item[i]}`)
+      const link = document.createElement('a');
+      link.href = item[i];
+      link.target = '_blank';
+      link.innerText = item[i];
+      cel.appendChild(link);
+    }
+    else{
+      cel.textContent = item[i];
+    }
   }
+
   insertButton(row.insertCell(-1));
 
   clearInputFields(myTable);
