@@ -66,7 +66,7 @@ const generateText = async (prompt) => {
   --------------------------------------------------------------------------------------
 */
 
-async function fetchVideos(query, maxResults) {
+const fetchVideos = async (query, maxResults) => {
   const terms = `${query}+brazilian+jiu-jitsu+bjj`;
   const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${terms}&key=${Youtube_API_KEY}&maxResults=${maxResults}`
   const response = await fetch(url, {
@@ -79,6 +79,29 @@ async function fetchVideos(query, maxResults) {
   const data = await response.json();
   console.log(`Video data: ${JSON.stringify(data)}`);
   return data;
+}
+
+/*
+  --------------------------------------------------------------------------------------
+  COMPONENTE EXTERNO VIACEP
+  Função genérica para obter endereço como string via requisição GET, usando a API do ViaCEP, dado um número de CEP
+  --------------------------------------------------------------------------------------
+*/
+
+const getCEP = async (cep) => {
+  try {
+      const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data;
+
+  } catch (error) {
+      console.error('Error:', error);
+  }
 }
 
 /*
@@ -228,12 +251,12 @@ const getItemObj = async (route_name, ...args) => {
     console.log(`in getItemObj prompt: ${prompt}`);
      
     loader.style.display = "block";
-    const data = await generateText(prompt);
+    const descriptionData = await generateText(prompt);
     loader.style.display = "none";
 
-    console.log(`generated data in getItemObj: ${data.choices[0]["message"]["content"]}`);
+    console.log(`generated data in getItemObj: ${descriptionData.choices[0]["message"]["content"]}`);
 
-    inputDescription.value = data.choices[0]["message"]["content"]
+    inputDescription.value = descriptionData.choices[0]["message"]["content"]
 
     console.log(`inputDescription: ${inputDescription.value}`)
 
@@ -253,11 +276,24 @@ const getItemObj = async (route_name, ...args) => {
       'video': document.getElementById(args[3]).value
     });
   } else if (route_name === 'aluno') {
+
+    let inputEndereco = document.getElementById(args[4])
+
+    const proxyEndereco = document.getElementById(args[4]).value;
+    loader.style.display = "block";
+    const enderecoData = await getCEP(proxyEndereco);
+    loader.style.display = "none";
+
+    const enderecoStr = `${enderecoData.logradouro}, ${enderecoData.bairro}, ${enderecoData.localidade}, ${enderecoData.uf}`;
+
+    inputEndereco.value = enderecoStr;
+
     return ({
       'nome': document.getElementById(args[0]).value,
       'data_de_nascimento': document.getElementById(args[1]).value,
       'data_de_inicio': document.getElementById(args[2]).value,
-      'graduacao': document.getElementById(args[3]).value
+      'graduacao': document.getElementById(args[3]).value,
+      'endereco': document.getElementById(args[4]).value
     });
 
   } else {
@@ -303,8 +339,9 @@ const clearInputFields = (myTable) => {
   } else if (myTable === 'myTableAluno') {
     document.getElementById("newAluno").value = "";
     document.getElementById("newDataNascimento").value = "";
-    document.getElementsByName("newDataInicio").value = "";
-    document.getElementById("newGraduacao").value = "";
+    document.getElementById("newDataInicio").value = "";
+    document.getElementById("newGraduacao").value = "Branca";
+    document.getElementById("newEndereco").value = "";
 
   } else {
     console.log('Unknown item type');
