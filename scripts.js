@@ -340,7 +340,7 @@ const clearInputFields = (myTable) => {
     document.getElementById("newAluno").value = "";
     document.getElementById("newDataNascimento").value = "";
     document.getElementById("newDataInicio").value = "";
-    document.getElementById("newGraduacao").value = "Branca";
+    document.getElementById("newGraduacao").value = "";
     document.getElementById("newEndereco").value = "";
 
   } else {
