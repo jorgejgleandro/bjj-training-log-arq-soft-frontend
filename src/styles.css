@@ -167,7 +167,12 @@ input[name="newNivel"] {
     justify-content: center;
 }
 
-.close:hover {
+.close_tecnica:hover {
+    color: #f44336;
+    font-weight: bolder;
+}
+
+.close_aluno:hover {
     color: #f44336;
     font-weight: bolder;
 }
@@ -214,12 +219,12 @@ p {
 
 
 #loader {
-    position: relative;
-    top: 50%;
+    position: absolute;
+    top: 20%;
     left: 45%;
     transform: translate(-50%, -50%);
     border: 16px solid #f3f3f3;
-    border-top: 16px solid #3498db;
+    border-top: 16px solid #e24713;
     border-radius: 50%;
     width: 120px;
     height: 120px;

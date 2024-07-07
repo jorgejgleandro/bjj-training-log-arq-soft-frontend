@@ -1,6 +1,5 @@
-const OpenAI_HOST=`https://api.openai.com/v1/chat/completions`
+const OpenAI_HOST=``
 const OpenAI_API_KEY=''
-
 const Youtube_API_KEY=''
 
 const loader = document.getElementById("loader");
@@ -173,10 +172,10 @@ const postItem = async (item_obj, route_name, myTable) => {
   Função para criar um botão close para cada item da lista
   --------------------------------------------------------------------------------------
 */
-const insertButton = (parent) => {
+const insertButton = (parent, route_name) => {
   let span = document.createElement("span");
   let txt = document.createTextNode("\u00D7");
-  span.className = "close";
+  span.className = `close_${route_name}`;
   span.appendChild(txt);
   parent.appendChild(span);
 }
@@ -188,7 +187,7 @@ const insertButton = (parent) => {
   --------------------------------------------------------------------------------------
 */
 const removeElement = (route_name) => {
-  let close = document.getElementsByClassName("close");
+  let close = document.getElementsByClassName(`close_${route_name}`);
   let i;
 
   for (i = 0; i < close.length; i++) {
@@ -380,7 +379,7 @@ const insertList = (item_obj, myTable, route_name) => {
     }
   }
 
-  insertButton(row.insertCell(-1));
+  insertButton(row.insertCell(-1), route_name);
 
   clearInputFields(myTable);
 
