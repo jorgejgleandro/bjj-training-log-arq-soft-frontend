@@ -1,4 +1,4 @@
-const OpenAI_HOST=``
+const OpenAI_HOST=`https://api.openai.com/v1/chat/completions`
 const OpenAI_API_KEY=''
 const Youtube_API_KEY=''
 
