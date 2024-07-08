@@ -1,6 +1,6 @@
 # *Brazilian Jiu-Jitsu Training Log - Frontend*
 
-Esta é uma aplicação web que permite o acompanhamento objetivo do progresso do aprendizado de técnicas de Jiu-Jitsu, um pequeno projeto que constitui o primeiro MVP a ser apresentado à disciplina **Desenvolvimento Full Stack Básico**.
+Esta é uma aplicação web que permite o acompanhamento objetivo do progresso do aprendizado de técnicas de Jiu-Jitsu, um pequeno projeto que constitui o MVP a ser apresentado à disciplina **Arquitetura de Software** do curso de **Pós-graduação em Engenharia de Software - PUC-Rio**
 
 ## Objetivo
 
@@ -15,21 +15,45 @@ A presente ferramenta se propõe a preencher essa lacuna, possibilitando não so
 Apesar do Jiu-Jitsu Brasileiro (*Brazilian Jiu Jitsu*) ter sido aqui eleito como caso de uso, considerando sua popularidade e a tradição de prática de lutas em todas as sessões de treino, em princípio, esse sistema poderia ser aplicado a qualquer modalidade que permita contar os números de sucessos e insucessos em aplicações de técnicas. A contagem poderia ser efetuada pelo próprio praticante, com base em suas recordações do treinamento, pelo professor assistindo a um pequeno grupo de alunos ou por um sistema de Visão Computacional baseado em vídeo com Estimação de Pose.
 
 ---
-## Execução
 
-Vale salientar que, para executar a aplicação com esse *frontend*, é necessário que o respectivo *backend* esteja em execução.
+## Baixar repositório
 
 Faça uma cópia desse repositório para sua máquina local, preferencialmente com o comando abaixo.
 ```
-git clone git@github.com:jorgejgleandro/bjj_log_app_front.git
+git clone git@github.com:jorgejgleandro/bjj-training-log-arq-soft-frontend.git
 ```
 
-Acesse a **branch** *master* do repositório:
+Acesse a **branch** *main* do repositório:
 
 ```
-git checkout master
+git checkout main
 ```
 
-Feito isso, basta realizar o **download** desse projeto e abrir o arquivo *index.html* no seu browser.
+## Instalação e Execução
 
-Para obter a implementação do **API**, dirija-se ao repositório do [*backend*](https://github.com/jorgejgleandro/bjj_log_app_api) e siga aquelas instruções.
+Vale salientar que, para executar a aplicação com esse componente  *frontend*, é necessário que o respectivo componente *backend* esteja em execução.
+
+### Modo desenvolvimento: Execução
+Feito isso, abra o arquivo *index.html* no seu browser.
+
+### Modo produção via Docker: Instalação
+Certifique-se de ter o [Docker](https://docs.docker.com/engine/install/) devidamente instalado e em execução em sua máquina.
+
+Pelo terminal, acesse o diretório que contém o Dockerfile, um nível acima do diretório src/, onde encontram-se os arquivos do frontend
+
+Construa a imagem Docker mediante o seguinte comando, **como administrador**:
+
+```
+$ docker build -t nome_da_sua_imagem .
+```
+### Modo produção via Docker: Execução
+
+Execute o container, execute o seguinte comando, **como administrador**, seguinte o comando:
+
+```
+$ docker run -d -p 9000:80 nome_da_sua_imagem
+```
+
+Uma vez executando, para acessar o front-end, basta abrir o [http://localhost:9000/#/](http://localhost:9000/#/) no navegador.
+
+Para obter a implementação da **API**, dirija-se ao repositório do componente [*backend*](https://github.com/jorgejgleandro/bjj-log-app-arq-soft-api) e siga aquelas instruções.
