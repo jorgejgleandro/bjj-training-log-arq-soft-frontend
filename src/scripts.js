@@ -10,7 +10,6 @@ const loader = document.getElementById("loader");
   Função genérica para obter um prompt para a descrição do termo dado
   --------------------------------------------------------------------------------------
 */
-
 const getPrompt = (termDescribe) => {
   
   const prompt = `Descreva a posição do Brazilian Jiu-Jitsu denominada ${termDescribe}. A descrição deve ser subdividida em: Princípio:, Posição Inicial: (e.g Guarda, Raspagem, Montada), Execução: (passos numerados), Variações:, Dicas Importantes: e Lembre-se:`
@@ -21,12 +20,11 @@ const getPrompt = (termDescribe) => {
 }
 
 /*
-  --------------------------------------------------------------------------------------
+  -------------------------------------------------------------------------------------------------------------
   COMPONENTE EXTERNO - OPENAI
   Função genérica para obter texto gerado por um LLM via requisição GET, usando a API da OpenAI, dado um prompt
-  --------------------------------------------------------------------------------------
+  -------------------------------------------------------------------------------------------------------------
 */
-
 const generateText = async (prompt) => {
   const url = OpenAI_HOST;
   const options = {
@@ -52,52 +50,56 @@ const generateText = async (prompt) => {
     }
     const data = await response.json();
     console.log(`data: ${data}`);
-    return data
+    return data;
   } catch (error) {
     console.error('Error:', error);
   }
 }
 
 /*
-  --------------------------------------------------------------------------------------
+  -----------------------------------------------------------------------------------------------------
   COMPONENTE EXTERNO YOUTUBE
   Função genérica para obter lista de videos via requisição GET, usando a API do Youtube, dado um termo
-  --------------------------------------------------------------------------------------
+  -----------------------------------------------------------------------------------------------------
 */
-
 const fetchVideos = async (query, maxResults) => {
   const terms = `${query}+brazilian+jiu-jitsu+bjj`;
   const url = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${terms}&key=${Youtube_API_KEY}&maxResults=${maxResults}`
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
+
+  try{
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      }
+    });
+    if (!response.ok){
+      throw new Error(`Error ${response.status}`);
     }
-  });
-  const data = await response.json();
-  console.log(`Video data: ${JSON.stringify(data)}`);
-  return data;
+    const data = await response.json();
+    console.log(`Video data: ${JSON.stringify(data)}`);
+    return data;
+  }
+  catch(error){
+    console.error('Error:', error);
+  }
 }
 
 /*
-  --------------------------------------------------------------------------------------
+  -----------------------------------------------------------------------------------------------------------------
   COMPONENTE EXTERNO VIACEP
   Função genérica para obter endereço como string via requisição GET, usando a API do ViaCEP, dado um número de CEP
-  --------------------------------------------------------------------------------------
+  -----------------------------------------------------------------------------------------------------------------
 */
-
 const getCEP = async (cep) => {
   try {
       const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
       }
-
       const data = await response.json();
       return data;
-
   } catch (error) {
       console.error('Error:', error);
   }
@@ -169,7 +171,7 @@ const postItem = async (item_obj, route_name, myTable) => {
 
 /*
   --------------------------------------------------------------------------------------
-  Função para criar um botão close para cada item da lista
+  Função para criar um botão close para cada item de lista, conforme rota
   --------------------------------------------------------------------------------------
 */
 const insertButton = (parent, route_name) => {
@@ -182,9 +184,9 @@ const insertButton = (parent, route_name) => {
 
 
 /*
-  --------------------------------------------------------------------------------------
-  Função genérica para remover um item de uma lista de acordo com o click no botão close
-  --------------------------------------------------------------------------------------
+  ----------------------------------------------------------------------------------------------------
+  Função genérica para remover um item de uma lista de acordo com o click no botão close conforme rota
+  ----------------------------------------------------------------------------------------------------
 */
 const removeElement = (route_name) => {
   let close = document.getElementsByClassName(`close_${route_name}`);
@@ -204,9 +206,9 @@ const removeElement = (route_name) => {
 }
 
 /*
-  --------------------------------------------------------------------------------------
-  Função genérica para remover um item de uma lista do servidor via requisição DELETE
-  --------------------------------------------------------------------------------------
+  --------------------------------------------------------------------------------------------------
+  Função genérica para remover um item de uma lista do servidor via requisição DELETE, conforme rota
+  --------------------------------------------------------------------------------------------------
 */
 const deleteItem = (route_name, item) => {
   console.log(item)
@@ -235,38 +237,37 @@ const getNivelValue = (newNivel) => {
 }
 
 /*
-  --------------------------------------------------------------------------------------
+  -----------------------------------------------------------------------------------------------------------
   Função para construir e devolver um objeto a partir dos valores fornecidos pelo usuário no form do frontend,
-  para uma determinada rota
-  --------------------------------------------------------------------------------------
+  conforme rota
+  -----------------------------------------------------------------------------------------------------------
 */
 const getItemObj = async (route_name, ...args) => {
   if (route_name === 'tecnica') {
+    // Obter o termo fornecido pelo usuário a ser descrito pelo LLM
     const termDescribe = document.getElementById(args[0]).value;
     console.log(`termDescribe: ${termDescribe}`);
-    let inputDescription = document.getElementById(args[1]);
         
+    // Obter o prompt conforme o termo fornecido pelo usuário
     const prompt = getPrompt(termDescribe);
-    console.log(`in getItemObj prompt: ${prompt}`);
-     
+
+    // Chamada ao componente externo OpenAI API para o LLM GPT-4o
     loader.style.display = "block";
     const descriptionData = await generateText(prompt);
     loader.style.display = "none";
 
-    console.log(`generated data in getItemObj: ${descriptionData.choices[0]["message"]["content"]}`);
-
+    // Popular campo correspondente no formulário
+    const inputDescription = document.getElementById(args[1]);
     inputDescription.value = descriptionData.choices[0]["message"]["content"]
 
-    console.log(`inputDescription: ${inputDescription.value}`)
-
-    let inputVideo = document.getElementById(args[3]);
+    // Chamada ao componente externo Youtube API para pesquisa de vídeo, dada um termo chave
     loader.style.display = "block";
     const videosData = await fetchVideos(termDescribe, 1);
     loader.style.display = "none";
 
-    const videoLink = `https://www.youtube.com/watch?v=` + videosData["items"][0]["id"]["videoId"];
-
-    inputVideo.value = videoLink;
+    // Popular campo correspondente
+    const inputVideo = document.getElementById(args[3]);
+    inputVideo.value = `https://www.youtube.com/watch?v=` + videosData["items"][0]["id"]["videoId"];
 
     return ({
       'nome': document.getElementById(args[0]).value,
@@ -276,16 +277,17 @@ const getItemObj = async (route_name, ...args) => {
     });
   } else if (route_name === 'aluno') {
 
-    let inputEndereco = document.getElementById(args[4])
+    // Obter o número de CEP fornecido pelo usuário
+    const inputEndereco = document.getElementById(args[4])
+    const CEP_number = document.getElementById(args[4]).value;
 
-    const proxyEndereco = document.getElementById(args[4]).value;
+    // Chamada ao componente externo viaCEP API para pesquisa de endereço, dado um CEP
     loader.style.display = "block";
-    const enderecoData = await getCEP(proxyEndereco);
+    const enderecoData = await getCEP(CEP_number);
     loader.style.display = "none";
 
-    const enderecoStr = `${enderecoData.logradouro}, ${enderecoData.bairro}, ${enderecoData.localidade}, ${enderecoData.uf}`;
-
-    inputEndereco.value = enderecoStr;
+    // Popular campo correspondente
+    inputEndereco.value = `${enderecoData.logradouro}, ${enderecoData.bairro}, ${enderecoData.localidade}, ${enderecoData.uf}`;
 
     return ({
       'nome': document.getElementById(args[0]).value,
@@ -307,16 +309,10 @@ const getItemObj = async (route_name, ...args) => {
   --------------------------------------------------------------------------------------
 */
 const newItem = async (route_name, myTable, ...args) => {
-  console.log(`In newItem. route_name: ${route_name} myTable:${myTable} args:${args}`)
-
   const item_obj = await getItemObj(route_name, ...args);
-
-  console.log(`In newItem. item_obj: ${JSON.stringify(item_obj)}`)
-
   if (args[0] === '') {
     alert("Escreva o nome da entrada!");
   } else {
-
     postItem(item_obj, route_name, myTable)
   }
 }
@@ -327,9 +323,6 @@ const newItem = async (route_name, myTable, ...args) => {
   ----------------------------------------------------------------------------------------------
 */
 const clearInputFields = (myTable) => {
-
-  console.log(`myTable: ${myTable}`)
-
   if (myTable === 'myTableTecnica') {
     document.getElementById("newTecnica").value = "";
     document.getElementById("newDescricao").value = "";
@@ -341,11 +334,9 @@ const clearInputFields = (myTable) => {
     document.getElementById("newDataInicio").value = "";
     document.getElementById("newGraduacao").value = "";
     document.getElementById("newEndereco").value = "";
-
   } else {
     console.log('Unknown item type');
   }
-
 }
 
 
@@ -364,10 +355,8 @@ const insertList = (item_obj, myTable, route_name) => {
   for (let i = 0; i < item.length; i++) {
     let cel = row.insertCell(i);
 
-    console.log(`INSERTLIST -- key is ${key[i]} value is ${item[i]}`)
-
+    // Se entrada for relativa a video, então aplicar hiperlink
     if (key[i] === 'video'){
-      console.log(`creating link for ${item[i]}`)
       const link = document.createElement('a');
       link.href = item[i];
       link.target = '_blank';
@@ -378,11 +367,8 @@ const insertList = (item_obj, myTable, route_name) => {
       cel.textContent = item[i];
     }
   }
-
   insertButton(row.insertCell(-1), route_name);
-
   clearInputFields(myTable);
-
   removeElement(route_name);
 }
 
@@ -403,7 +389,6 @@ const setTab = (tab_content, tab_button) => {
   for (let i = 0; i < tablinks.length; i++) {
     tablinks[i].classList.remove("active");
   }
-
 
   tab_content.style.display = "block";
   tab_button.classList.add("active");
