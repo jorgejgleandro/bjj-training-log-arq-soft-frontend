@@ -15,7 +15,6 @@ A presente ferramenta se propõe a preencher essa lacuna, possibilitando não so
 Apesar do Jiu-Jitsu Brasileiro (*Brazilian Jiu Jitsu*) ter sido aqui eleito como caso de uso, considerando sua popularidade e a tradição de prática de lutas em todas as sessões de treino, em princípio, esse sistema poderia ser aplicado a qualquer modalidade que permita contar os números de sucessos e insucessos em aplicações de técnicas. A contagem poderia ser efetuada pelo próprio praticante, com base em suas recordações do treinamento, pelo professor assistindo a um pequeno grupo de alunos ou por um sistema de Visão Computacional baseado em vídeo com Estimação de Pose.
 
 ---
-
 ## Baixar repositório
 
 Faça uma cópia desse repositório para sua máquina local, preferencialmente com o comando abaixo.
@@ -29,13 +28,16 @@ Acesse a **branch** *main* do repositório:
 git checkout main
 ```
 
+---
 ## Instalação e Execução
 
 Vale salientar que, para executar a aplicação com esse componente  *frontend*, é necessário que o respectivo componente *backend* esteja em execução.
 
+---
 ### Modo desenvolvimento: Execução
 Feito isso, abra o arquivo *index.html* no seu browser.
 
+---
 ### Modo produção via Docker: Instalação
 Certifique-se de ter o [Docker](https://docs.docker.com/engine/install/) devidamente instalado e em execução em sua máquina.
 
@@ -46,6 +48,7 @@ Construa a imagem Docker mediante o seguinte comando, **como administrador**:
 ```
 $ docker build -t nome_da_sua_imagem .
 ```
+
 ### Modo produção via Docker: Execução
 
 Execute o container, execute o seguinte comando, **como administrador**, seguinte o comando:
