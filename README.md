@@ -2,9 +2,9 @@
 
 Esta é uma aplicação web que permite o acompanhamento objetivo do progresso do aprendizado de técnicas de Jiu-Jitsu, um pequeno projeto que constitui o MVP a ser apresentado à disciplina **Arquitetura de Software** do curso de **Pós-graduação em Engenharia de Software - PUC-Rio**
 
-## Objetivo
+## Descrição
 
-<img src="./img/positions.jpg" alt="Brazilian Jiu-Jitsu Training Image" title="Brazilian Jiu-Jitsu Training Image" width="200"/>
+<img src="./src/img/positions.jpg" alt="Brazilian Jiu-Jitsu Training Image" title="Brazilian Jiu-Jitsu Training Image" width="300" style="float:left; margin:0px 20px"/>
 
 Artes Marciais são sistemas de luta que codificam e organizam movimentos visando ao combate corpo-a-corpo, presentes em diversas culturas e tradições milenares.
 No mundo moderno, a prática de artes marciais ganhou contornos diferentes das motivações simplesmente militares que as originaram, tornando-se um negócio bilionário. Em grande medida, essa popularização se deve aos benefícios para a saúde física, mental e  possíveis benefícios para autodefesa.
@@ -60,3 +60,99 @@ $ docker run -d -p 9000:80 nome_da_sua_imagem
 Uma vez executando, para acessar o front-end, basta abrir o [http://localhost:9000/#/](http://localhost:9000/#/) no navegador.
 
 Para obter a implementação da **API**, dirija-se ao repositório do componente [*backend*](https://github.com/jorgejgleandro/bjj-log-app-arq-soft-api) e siga aquelas instruções.
+
+
+## APIs Externas Públicas
+
+Três APIs externas foram utilizadas como componentes nesta aplicação, a saber:
+
+1. [OpenAI API](https://openai.com/api/)
+
+Para geração automática de descrição de técnica ao adicioná-la, dado um termo para o nome da técnica, foi usado o modelo [GPT-4o](https://platform.openai.com/docs/models/gpt-4o) da [OpenAI API](https://openai.com/api/), o mais avançado modelo multimodal para geração de texto dessa API, com janela de contexto de *128.000* tokens, e último *checkpoint* de treinamento datado de *Outubro de 2023*.
+
+    1.1. Termos de Uso
+
+    O documento legal que dispõe sobre os termos de uso pode ser encontrado em:
+
+[Terns of Use](https://openai.com/policies/terms-of-use/)
+
+    1.2. Cadastro
+
+    Para execução dessa aplicação, não é necessário cadastro na OpenAI, desde que o usuário esteja em posse de alguma chave **OpenAI_API_KEY**, gerada e fornecida por um assinante dos serviços dessa API.
+
+    Caso a chave de API não seja fornecida, siga os passos:
+
+        * Crie uma conta na OpenAI: Acesse o site oficial da OpenAI e faça login com sua conta existente ou crie uma nova conta, se necessário.
+        * Acesse suas chaves de API:
+            * Após fazer login, clique na foto do seu perfil no canto superior direito.
+            * Selecione “Exibir chaves de API”.
+        * Crie uma nova chave secreta:
+            * Clique no botão “Criar nova chave secreta”.
+            * Copie e cole a chave de API como valor para a respectiva variável no arquivo scripts.js: const OpenAI_API_KEY=''
+
+    ou consulte a documentação abaixo
+
+[Developer Quickstart](https://platform.openai.com/docs/quickstart)
+
+    1.3. Rota utilizada
+
+        https://api.openai.com/v1/chat/completions
+
+2. [Youtube Data API](https://developers.google.com/youtube/v3?hl=pt-br)
+
+Para obter o link para um vídeo relacionado ao termo para o nome da técnica, ao adicioná-la, foi usada a [Youtube Data API](https://developers.google.com/youtube/v3/docs/search/list?hl=pt-br)
+
+    2.1. Termos de Serviço
+
+    O documento legal que dispõe sobre os termos de serviços pode ser encontrado em:
+
+> [Youtube API Services Terms of Service](https://developers.google.com/youtube/terms/api-services-terms-of-service)
+
+    2.2. Cadastro
+
+        Para execução dessa aplicação, não é necessário cadastro na Youtube API, desde que o usuário possua alguma chave **Youtube_API_KEY**, gerada e fornecida por um assinante dos serviços dessa API.
+
+        Caso a chave de API não seja fornecida, siga os passos:
+
+            * Crie um projeto no Console de APIs do Google:
+                * Acesse o Console de APIs do Google.
+                * Crie um novo projeto ou selecione um existente.
+
+            * Ative a API do YouTube para o projeto:
+                * No painel do projeto, clique em “Ativar APIs e serviços”.
+                * Pesquise por “YouTube Data API” e ative-a.
+
+            * Crie as credenciais necessárias:
+                * Acesse a seção “Credenciais” no painel do projeto.
+                * Clique em “Criar credenciais” e escolha “Chave de API”.
+                * crie uma chave de API
+                * Copie e cole a chave de API como valor para a respectiva variável no arquivo scripts.js: const Youtube_API_KEY=''
+
+        ou consulte a documentação abaixo
+
+[Visão Geral da API Youtube Data](https://developers.google.com/youtube/v3/getting-started?hl=pt-br)
+
+    2.3. Rota utilizada
+
+        https://www.googleapis.com/youtube/v3
+
+3. viaCEP API
+
+    3.1. Licença
+
+        Não se aplica
+
+    3.2. Cadastro
+
+        Não se aplica
+
+    3.3. Rota utilizada
+
+        https://viacep.com.br/ws/${cep}/json/
+
+
+## *Prompt* empregado:
+
+> `Descreva a posição do Brazilian Jiu-Jitsu denominada ${termDescribe}. A descrição deve ser subdividida em: Princípio:, Posição Inicial: (e.g Guarda, Raspagem, Montada), Execução: (passos numerados), Variações:, Dicas Importantes: e Lembre-se:`
+
+, onde **termDescribe** é um *placeholder* para o termo com o nome da técnica fornecido pelo usuário.
