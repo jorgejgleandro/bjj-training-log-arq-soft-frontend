@@ -15,6 +15,12 @@ A presente ferramenta se propõe a preencher essa lacuna, possibilitando não so
 Apesar do Jiu-Jitsu Brasileiro (*Brazilian Jiu Jitsu*) ter sido aqui eleito como caso de uso, considerando sua popularidade e a tradição de prática de lutas em todas as sessões de treino, em princípio, esse sistema poderia ser aplicado a qualquer modalidade que permita contar os números de sucessos e insucessos em aplicações de técnicas. A contagem poderia ser efetuada pelo próprio praticante, com base em suas recordações do treinamento, pelo professor assistindo a um pequeno grupo de alunos ou por um sistema de Visão Computacional baseado em vídeo com Estimação de Pose.
 
 ---
+
+<img src="mvp-3-diagram.png" alt="Arquitetura do BJJ Training Log" title="Brazilian Jiu-Jitsu Training Image" width="600" class="center"/>
+
+<center> Figura: Arquitetura do BJJ Training Log </center>
+
+---
 ## Baixar repositório
 
 Faça uma cópia desse repositório para sua máquina local, preferencialmente com o comando abaixo.
