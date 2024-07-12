@@ -294,7 +294,7 @@ const getItemObj = async (route_name, ...args) => {
       'data_de_nascimento': document.getElementById(args[1]).value,
       'data_de_inicio': document.getElementById(args[2]).value,
       'graduacao': document.getElementById(args[3]).value,
-      'endereco': document.getElementById(args[4]).value
+      'endereco': inputEndereco.value
     });
 
   } else {
