@@ -86,6 +86,11 @@ Para geração automática de descrição de técnica ao adicioná-la, dado um t
 
     Para execução dessa aplicação, não é necessário cadastro na OpenAI, desde que o usuário esteja em posse de alguma chave **OpenAI_API_KEY**, gerada e fornecida por um assinante dos serviços dessa API.
 
+    Se a chave de API for fornecida, copie seu valor para a variável correspondente no cabeçalho do código do arquivo scripts.js:
+```
+const OpenAI_API_KEY='PROVIDED_OPENAI_API_KEY'
+```
+
     Caso a chave de API não seja fornecida, siga os passos:
 
         * Crie uma conta na OpenAI: Acesse o site oficial da OpenAI e faça login com sua conta existente ou crie uma nova conta, se necessário.
@@ -117,6 +122,11 @@ Para obter o link para um vídeo relacionado ao termo para o nome da técnica, a
     2.2. Cadastro
 
         Para execução dessa aplicação, não é necessário cadastro na Youtube API, desde que o usuário possua alguma chave **Youtube_API_KEY**, gerada e fornecida por um assinante dos serviços dessa API.
+
+            Se a chave de API for fornecida, copie seu valor para a variável correspondente no cabeçalho do código do arquivo scripts.js:
+```
+const Youtube_API_KEY='PROVIDED_Youtube_API_KEY'
+```
 
         Caso a chave de API não seja fornecida, siga os passos:
 
